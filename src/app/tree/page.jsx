@@ -9,8 +9,8 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { rgbToHex } from "@mui/material";
 import { toast } from "react-toastify";
+import "./tree-style.css";
 
 const dataOfTree = [
   {
@@ -229,15 +229,27 @@ function TreePage() {
         label={node.label}
         onContextMenu={(e) => handleContextMenu(e, node.id)}
         sx={{
-          bgcolor:
-            selectedItem === node.id
-              ? "rgba(100, 6, 151, 0.15)"
-              : "transparent",
-          "&:hover": {
-            bgcolor: "rgba(161, 25, 210, 0.08)",
-            cursor: "pointer",
+          "& .MuiTreeItem-label": {
+            fontFamily: "Vazirmatn, sans-serif",
+            fontSize: "16px",
+            color: "#333",
+            backgroundColor: "#f5f5f5",
+            padding: "4px 8px",
+            borderRadius: "6px",
+            transition: "all 0.2s ease-in-out",
           },
-          borderRadius: 1,
+          "& .MuiTreeItem-label:hover": {
+            backgroundColor: "#9dadff",
+            color: "#ffffff",
+          },
+          "& .MuiTreeItem-content.Mui-selected .MuiTreeItem-label": {
+            backgroundColor: "#9dadff",
+            color: "#ffffff",
+          },
+          "& .MuiTreeItem-content.Mui-selected:hover .MuiTreeItem-label": {
+            backgroundColor: "#9dadff",
+            color: "#ffffff",
+          },
         }}
       >
         {node.children && node.children.length > 0
@@ -247,8 +259,8 @@ function TreePage() {
     ));
 
   return (
-    <div style={{ maxWidth: 600, margin: "20px auto", padding: "0 10px" }}>
-      <h2>حساب های اصلی</h2>
+    <div className="tree-container">
+      <h2 className="tree-title">حساب های اصلی</h2>
       <SimpleTreeView expanded={expandedIds}>
         {renderTree(treeData)}
       </SimpleTreeView>
@@ -264,41 +276,111 @@ function TreePage() {
             bgcolor: "#f9f9f9",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
             borderRadius: 2,
+            fontFamily: "Vazirmatn, sans-serif",
             minWidth: 150,
           },
         }}
       >
-        <MenuItem onClick={handleCut} disabled={!selectedItem || !canCut()}>
+        <MenuItem
+          onClick={handleCut}
+          disabled={!selectedItem || !canCut()}
+          sx={{
+            fontFamily: "Vazirmatn, sans-serif",
+            fontSize: "15px",
+            color: "#333",
+            "&:hover": {
+              backgroundColor: "#c9d1f9",
+              color: "#4b0082",
+            },
+            "&.Mui-disabled": {
+              color: "#bbb",
+            },
+          }}
+        >
           برش
         </MenuItem>
-        <MenuItem onClick={handleCopy} disabled={!selectedItem}>
+        <MenuItem
+          onClick={handleCopy}
+          disabled={!selectedItem}
+          sx={{
+            fontFamily: "Vazirmatn, sans-serif",
+            fontSize: "15px",
+            color: "#333",
+            "&:hover": {
+              backgroundColor: "#c9d1f9",
+              color: "#4b0082",
+            },
+            "&.Mui-disabled": {
+              color: "#bbb",
+            },
+          }}
+        >
           کپی
         </MenuItem>
-        <MenuItem onClick={handlePaste} disabled={!clipboard || !selectedItem}>
+        <MenuItem
+          onClick={handlePaste}
+          disabled={!clipboard || !selectedItem}
+          sx={{
+            fontFamily: "Vazirmatn, sans-serif",
+            fontSize: "15px",
+            color: "#333",
+            "&:hover": {
+              backgroundColor: "#c9d1f9",
+              color: "#4b0082",
+            },
+            "&.Mui-disabled": {
+              color: "#bbb",
+            },
+          }}
+        >
           چسباندن
         </MenuItem>
         <MenuItem
           onClick={handleDelete}
           disabled={!selectedItem || !canDelete()}
+          sx={{
+            fontFamily: "Vazirmatn, sans-serif",
+            fontSize: "15px",
+            color: "#333",
+            "&:hover": {
+              backgroundColor: "#c9d1f9",
+              color: "#4b0082",
+            },
+            "&.Mui-disabled": {
+              color: "#bbb",
+            },
+          }}
         >
           حذف
         </MenuItem>
-        <MenuItem onClick={handleAddChild} disabled={!selectedItem}>
+        <MenuItem
+          onClick={handleAddChild}
+          disabled={!selectedItem}
+          sx={{
+            fontFamily: "Vazirmatn, sans-serif",
+            fontSize: "15px",
+            color: "#333",
+            "&:hover": {
+              backgroundColor: "#c9d1f9",
+              color: "#4b0082",
+            },
+            "&.Mui-disabled": {
+              color: "#bbb",
+            },
+          }}
+        >
           افزودن زیرشاخه
         </MenuItem>
       </Menu>
 
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
         <Box
+          className="tree-modal"
           sx={{
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            borderRadius: 2,
-            p: 3,
             width: 350,
           }}
         >
